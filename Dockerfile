@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
+
 # Create necessary directories
 RUN mkdir -p /minecraft/server /minecraft/backups
 
@@ -22,8 +23,11 @@ COPY backup.sh /minecraft/backup.sh
 # Make your scripts executable
 RUN chmod +x /minecraft/*.sh
 
+# Change directory to /minecraft
+WORKDIR /minecraft
+
 # Run Install.sh to set up Forge
-RUN /minecraft/Install.sh
+RUN ./Install.sh
 
 # Copy the crontab file to the cron.d directory
 RUN echo "0 * * * * /minecraft/backup.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/minecraft-backup
