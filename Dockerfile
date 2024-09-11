@@ -14,7 +14,7 @@ RUN ./Install.sh
 # EULA
 RUN echo "eula=true" > eula.txt
 # Expose the Minecraft server port
-EXPOSE 25565
+EXPOSE 25565 25575
 
 # Start the server
 CMD ["./ServerStart.sh"]
