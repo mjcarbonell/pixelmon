@@ -9,11 +9,10 @@ COPY . .
 # Set the executable permissions for scripts
 RUN chmod +x Install.sh ServerStart.sh settings.sh
 
-RUN echo "eula=true" > /minecraft/eula.txt
-
 # Install Forge server
 RUN ./Install.sh
-
+# EULA
+RUN echo "eula=true" > eula.txt
 # Expose the Minecraft server port
 EXPOSE 25565
 
