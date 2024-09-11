@@ -21,7 +21,8 @@ EXPOSE 25565
 # Enable RCON in server.properties
 RUN echo "enable-rcon=true" >> server.properties && \
     echo "rcon.password=your_password_here" >> server.properties && \
-    echo "rcon.port=25575" >> server.properties
+    echo "rcon.port=25575" >> server.properties && \
+    echo "level-name=world" >> server.properties
 
 # Install cron
 RUN apt-get update && apt-get install -y cron curl
