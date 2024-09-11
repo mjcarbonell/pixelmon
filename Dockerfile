@@ -23,18 +23,15 @@ RUN echo "enable-rcon=true" >> server.properties && \
     echo "rcon.password=your_password_here" >> server.properties && \
     echo "rcon.port=25575" >> server.properties
 
-# Install cron and necessary tools for server management
-RUN apt-get update && apt-get install -y cron curl
+# Install cron and other necessary tools
+RUN apt-get update && apt-get install -y cron curl zip
 
-# Add the script to handle world backups and download links
+# Copy the world backup script and ensure it's executable
 COPY world_backup.sh /app/world_backup.sh
 RUN chmod +x /app/world_backup.sh
 
-# Ensure the server doesn't fail if the world folder already exists
-RUN if [ -d "./world" ]; then mv ./world ./world_backup; fi
-
-# Add cron job to backup world and send link at 2:30 PM daily
+# Add cron job for world backup at 2:30 PM daily
 RUN echo "30 14 * * * /app/world_backup.sh" >> /etc/crontab
 
-# Start cron and the Minecraft server
-CMD cron && ./ServerStart.sh
+# Check if the 'world' directory exists, rename if necessary, then start the server
+CMD ["/bin/bash", "-c", "if [ -d './world' ]; then mv ./world ./world_backup_$(date +%Y%m%d_%H%M%S); fi && ./ServerStart.sh"]
