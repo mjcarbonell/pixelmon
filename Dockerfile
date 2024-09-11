@@ -15,6 +15,10 @@ RUN ./Install.sh
 RUN echo "eula=true" > eula.txt
 # Expose the Minecraft server port
 EXPOSE 25565 25575
+RUN echo "enable-rcon=true" >> server.properties && \
+    echo "rcon.password=your_password_here" >> server.properties && \
+    echo "rcon.port=25575" >> server.properties
+    
 
 # Start the server
 CMD ["./ServerStart.sh"]
