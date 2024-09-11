@@ -1,24 +1,44 @@
+# Use the official OpenJDK image as the base
 FROM openjdk:8-jre-slim
 
-# Set working directory
-WORKDIR /app
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    zip \
+    rclone \
+    cron \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy necessary files
-COPY . .
+# Create necessary directories
+RUN mkdir -p /minecraft/server /minecraft/backups
 
-# Set the executable permissions for scripts
-RUN chmod +x Install.sh ServerStart.sh settings.sh
+# Copy your settings and scripts into the container
+COPY settings.sh /minecraft/settings.sh
+COPY Install.sh /minecraft/Install.sh
+COPY ServerStart.sh /minecraft/ServerStart.sh
+COPY backup.sh /minecraft/backup.sh
 
-# Install Forge server lol
-RUN ./Install.sh
-# EULA
-RUN echo "eula=true" > eula.txt
-# Expose the Minecraft server port
-EXPOSE 25565 25575
-RUN echo "enable-rcon=true" >> server.properties && \
-    echo "rcon.password=your_password_here" >> server.properties && \
-    echo "rcon.port=25575" >> server.properties
-    
+# Make your scripts executable
+RUN chmod +x /minecraft/*.sh
 
-# Start the server
-CMD ["./ServerStart.sh"]
+# Run Install.sh to set up Forge
+RUN /minecraft/Install.sh
+
+# Copy the crontab file to the cron.d directory
+RUN echo "0 * * * * /minecraft/backup.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/minecraft-backup
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/minecraft-backup
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+# Start cron service in the background
+RUN service cron start
+
+# Expose Minecraft port
+EXPOSE 25565
+
+# Start Minecraft server and cron in the same container
+CMD cron && /minecraft/ServerStart.sh
