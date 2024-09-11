@@ -9,7 +9,7 @@ COPY . .
 # Set the executable permissions for scripts
 RUN chmod +x Install.sh ServerStart.sh settings.sh
 
-# Install Forge server
+# Install Forge server lol
 RUN ./Install.sh
 # EULA
 RUN echo "eula=true" > eula.txt
