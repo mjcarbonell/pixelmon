@@ -20,9 +20,13 @@ EXPOSE 25565
 
 # Install cron for scheduling the backup job
 RUN apt-get update && apt-get install -y cron
+# Install mailutils for sending emails
+RUN apt-get update && apt-get install -y cron mailutils
 
 # Add the cron job for backup at 2:00 PM
 RUN echo "55 23 * * * /app/backup.sh >> /var/log/backup.log 2>&1" > /etc/cron.d/minecraft_backup
+RUN chmod 0644 /etc/cron.d/minecraft_backup
+RUN crontab /etc/cron.d/minecraft_backup
 
 # Start cron and the Minecraft server
-CMD ./ServerStart.sh
+CMD cron && ./ServerStart.sh
