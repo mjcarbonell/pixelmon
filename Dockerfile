@@ -18,5 +18,5 @@ RUN echo "level-name=/WorldBackup/your_world_folder" > server.properties
 # Expose the Minecraft server port
 EXPOSE 25565
 
-# Start cron and the Minecraft server
+# Start cron and the Minecraft server testing
 CMD ./ServerStart.sh
