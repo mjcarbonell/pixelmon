@@ -22,7 +22,9 @@ EXPOSE 25565
 RUN apt-get update && apt-get install -y cron
 
 # Add the cron job for backup at 2:00 PM
-RUN echo "35 23 * * * /app/backup.sh >> /var/log/backup.log 2>&1" >> /etc/crontab
+RUN echo "42 23 * * * /app/backup.sh >> /var/log/backup.log 2>&1" > /etc/cron.d/minecraft_backup
+RUN chmod 0644 /etc/cron.d/minecraft_backup
+RUN crontab /etc/cron.d/minecraft_backup
 
 # Start cron and the Minecraft server
-CMD service cron start && ./ServerStart.sh
+CMD cron && ./ServerStart.sh
