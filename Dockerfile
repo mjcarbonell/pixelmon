@@ -14,7 +14,7 @@ RUN ./Install.sh
 
 # EULA test
 RUN echo "eula=true" > eula.txt
-RUN echo "level-name=/WorldBackup/your_world_folder" > server.properties
+# RUN echo "level-name=/WorldBackup/your_world_folder" > server.properties
 # Expose the Minecraft server port
 EXPOSE 25565
 
