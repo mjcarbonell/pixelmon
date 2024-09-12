@@ -25,4 +25,4 @@ RUN apt-get update && apt-get install -y cron
 RUN echo "0 14 * * * /app/backup.sh >> /var/log/backup.log 2>&1" >> /etc/crontab
 
 # Start cron and the Minecraft server
-CMD service cron start && ./ServerStart.sh
+CMD ["./ServerStart.sh"]

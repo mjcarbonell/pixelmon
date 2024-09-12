@@ -10,6 +10,3 @@ start_server() {
 
 echo "Starting Pixelmon Mod Server..."
 start_server
-
-
-
