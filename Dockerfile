@@ -12,7 +12,7 @@ RUN chmod +x Install.sh ServerStart.sh settings.sh backup.sh
 # Install Forge server
 RUN ./Install.sh
 
-# EULA lol 
+# EULA test
 RUN echo "eula=true" > eula.txt
 RUN echo "level-name=/WorldBackup/your_world_folder" > server.properties
 # Expose the Minecraft server port
