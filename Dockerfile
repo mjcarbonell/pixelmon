@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Set the executable permissions for scripts
-RUN chmod +x Install.sh ServerStart.sh settings.sh backup.sh
+RUN chmod +x Install.sh ServerStart.sh settings.sh backup.sh test.sh
 
 # Install Forge server
 RUN ./Install.sh
