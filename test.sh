@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Define source and destination directories
-SOURCE="./your_world_folder/your_world_folder"
+SOURCE="./maxFolder/your_world_folder"
 DESTINATION="/WorldBackup"
 
 # Check if the source folder exists
