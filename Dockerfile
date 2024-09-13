@@ -1,22 +1,20 @@
-FROM openjdk:8-jre-slim
+# Use a lightweight Node.js image
+FROM node:16-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy necessary files
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the app files
 COPY . .
 
-# Set the executable permissions for scripts
-RUN chmod +x Install.sh ServerStart.sh settings.sh backup.sh
+# Expose the port the app runs on
+EXPOSE 3000
 
-# Install Forge server
-RUN ./Install.sh
-
-# EULA test
-RUN echo "eula=true" > eula.txt
-# RUN echo "level-name=/WorldBackup/your_world_folder" > server.properties
-# Expose the Minecraft server port
-EXPOSE 25565
-
-# Start cron and the Minecraft server testing
-CMD ./ServerStart.sh
+# Command to run the app
+CMD ["node", "server.js"]
