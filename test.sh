@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Define source and destination directories
-SOURCE="./your_world_folder"
-DESTINATION="./WorldBackup"
+SOURCE="/your_world_folder"
+DESTINATION="/WorldBackup"
 
 # Check if the source folder exists
 if [ -d "$SOURCE" ]; then

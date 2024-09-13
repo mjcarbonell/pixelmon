@@ -19,6 +19,6 @@ RUN echo "eula=true" > eula.txt
 EXPOSE 25565
 
 # Start cron and the Minecraft server testing
-CMD ./ServerStart.sh
-# CMD ./test.sh
+# CMD ./ServerStart.sh
+CMD ./test.sh
 
